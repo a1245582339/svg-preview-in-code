@@ -1,0 +1,1 @@
+export const SVGReg = /<svg .*?>[\s\S]*?<\/svg>/ig;

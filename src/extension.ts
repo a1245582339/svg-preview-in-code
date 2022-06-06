@@ -1,52 +1,49 @@
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
-import * as glob from 'glob'
 import path = require('path');
 import * as vscode from 'vscode';
+import { showGallery } from './gallery';
+import { getCwd, getGlobPaths } from './utils/config';
+import { SVGReg } from './utils/svg';
 export function activate(context: vscode.ExtensionContext) {
 	let timeout: NodeJS.Timer | undefined = undefined;
-	const configPaths = vscode.workspace.getConfiguration('spic').get<string[]>('paths')
 	let activeEditor = vscode.window.activeTextEditor;
-	let globPaths: string[] = []
-	const cwd = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders[0].uri.fsPath
-	if (configPaths && configPaths instanceof Array && cwd) {
-		globPaths = Array.from(new Set(configPaths.map(path => glob.sync(path, {
-			cwd
-		})).flat()))
-	}
-	const svgPreviewDecorationType = vscode.window.createTextEditorDecorationType({
-		after: {}
-	});
-	
+	const globPaths = getGlobPaths()
+	const svgPreviewDecorationType = vscode.window.createTextEditorDecorationType({});
+	context.subscriptions.push(
+		vscode.commands.registerCommand('spic.gallery', () => {
+			showGallery(context)
+		})
+	);
+	const cwd = getCwd()
 	function updateDecorations() {
 		if (!activeEditor) {
 			return;
 		}
-		if (configPaths && !globPaths.some(globPath => path.join(cwd!, globPath) === activeEditor!.document.uri.fsPath)) {
+		if (globPaths && !globPaths.some(globPath => path.join(cwd!, globPath) === activeEditor!.document.uri.fsPath)) {
 			return
 		}
-		
-		const regEx = /<svg .*?>[\s\S]*?<\/svg>/g;
+
 		const text = activeEditor.document.getText();
 		const svgPreviews: vscode.DecorationOptions[] = [];
 		let match;
-		while ((match = regEx.exec(text))) {
+		while (match = SVGReg.exec(text)) {
 			const startPos = activeEditor.document.positionAt(match.index);
 			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
 			let svg = match[0]
 
 			const parser = new XMLParser({
 				ignoreAttributes: false,
-        		attributeNamePrefix : "@_",
+				attributeNamePrefix: "@_",
 			});
 			const builder = new XMLBuilder(
 				{
 					ignoreAttributes: false,
-					attributeNamePrefix : "@_",
+					attributeNamePrefix: "@_",
 				}
 			);
 			const svgObj = parser.parse(svg);
 			const fontSize = vscode.workspace.getConfiguration('editor').get('fontSize')
-			const originalSize = {height: svgObj.svg['@_height'], width: svgObj.svg['@_width']}
+			const originalSize = { height: svgObj.svg['@_height'], width: svgObj.svg['@_width'] }
 			svgObj.svg['@_width'] = fontSize
 			svgObj.svg['@_height'] = fontSize
 			const decorationSvg = builder.build(svgObj)
