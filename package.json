@@ -7,7 +7,7 @@
 	},
 	"icon": "image/icon.png",
 	"publisher": "lzp",
-	"version": "0.0.2",
+	"version": "0.0.4",
 	"engines": {
 		"vscode": "^1.67.0"
 	},
@@ -54,6 +54,7 @@
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"package": "vsce package",
+		"publish": "vsce publish",
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {

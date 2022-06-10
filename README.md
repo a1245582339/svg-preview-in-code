@@ -4,7 +4,7 @@ SPIC is a plugin that can preview svg code in your file, such as jsx/tsx, html, 
 
 ## Preview inline
 
-![](https://i.postimg.cc/C5Tk4knm/s1.gif)
+![s1](https://cdn.jsdelivr.net/gh/a1245582339/image-hosting@master/s1.3xt6eo1800k0.gif)
 
 By default, this plugin will watch your all files change when your file actived in editor, so, to ensure good performance, you can add path config so that specify files to be watch by the plugin. 
 
@@ -17,7 +17,8 @@ By default, this plugin will watch your all files change when your file actived 
 
 **You must add `spic.include` or `spic.exclude` to assign which files you want to show in gallery. And I also highly recommend you assign these two config to ensure performance.**
 
-![](https://i.postimg.cc/xCr36WWv/s2.gif)
+
+![s2](https://cdn.jsdelivr.net/gh/a1245582339/image-hosting@master/s2.22wcrjjhoctc.gif)
 
 You can also run command `svg.gallery` to show all svgs in your include files. And you can click the svg item which you want to check in the code, extention will open the file in editor and navigate to the svg code.
 
