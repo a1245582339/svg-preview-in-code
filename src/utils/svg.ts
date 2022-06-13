@@ -9,7 +9,7 @@ const builder = new XMLBuilder(
         attributeNamePrefix: "@_",
     }
 );
-export const SVGReg = /<svg .*?>[\s\S]*?<\/svg>/ig;
+export const SVGReg = /<svg(S*?)[^>]*>[\s\S]*?<\/svg>/ig;
 
 export const svg2Base64 = (code: string, size?: {height: number, width: number}) => {
     let svg = code
