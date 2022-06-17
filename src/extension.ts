@@ -6,7 +6,6 @@ import { removeEscape, svg2Base64, SVGReg } from './utils/svg';
 export function activate(context: vscode.ExtensionContext) {
 	let timeout: NodeJS.Timer | undefined = undefined;
 	let activeEditor = vscode.window.activeTextEditor;
-	const globPaths = getGlobPaths()
 	const svgPreviewDecorationType = vscode.window.createTextEditorDecorationType({});
 	context.subscriptions.push(
 		vscode.commands.registerCommand('spic.gallery', async () => {
@@ -18,6 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!activeEditor) {
 			return;
 		}
+		const globPaths = getGlobPaths()
 		if (globPaths && !globPaths.some(globPath => path.join(cwd!, globPath) === activeEditor!.document.uri.fsPath)) {
 			return
 		}
