@@ -49,9 +49,8 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"page-watch": "esbuild ./src/page/gallery/main.tsx --sourcemap --outdir=out/page/gallery --bundle --watch",
-		"node-watch": "tsc -watch -p ./",
-		"watch": "npm run node-watch | npm run page-watch",
+		"watch": "tsc -watch -p ./",
+		"build-page": "esbuild ./src/page/gallery/main.tsx --sourcemap --outdir=out/page/gallery --bundle",
 		"compile": "tsc -p ./ & esbuild ./src/page/gallery/main.tsx --outdir=out/page/gallery --bundle",
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",

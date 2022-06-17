@@ -10,8 +10,8 @@
     "typescript.tsc.autoDetect": "off",
     "emeraldwalk.runonsave": {
         "commands": [{
-            "match": ".*",
-            "cmd": "npm run compile"
+            "match": "src\\\\page\\\\.*",
+            "cmd": "npm run build-page"
         }]
     }
 }
