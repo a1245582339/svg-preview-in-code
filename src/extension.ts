@@ -2,7 +2,7 @@ import path = require('path');
 import * as vscode from 'vscode';
 import { showGallery } from './gallery';
 import { getCwd, getGlobPaths } from './utils/config';
-import { svg2Base64, SVGReg } from './utils/svg';
+import { removeEscape, svg2Base64, SVGReg } from './utils/svg';
 export function activate(context: vscode.ExtensionContext) {
 	let timeout: NodeJS.Timer | undefined = undefined;
 	let activeEditor = vscode.window.activeTextEditor;
@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 		while (match = SVGReg.exec(text)) {
 			const startPos = activeEditor.document.positionAt(match.index);
 			const endPos = activeEditor.document.positionAt(match.index + match[0].length);
-			let svg = match[0]
+			let svg = removeEscape(match[0])
 			const fontSize = vscode.workspace.getConfiguration('editor').get('fontSize') as number
 			const decorationBase64Result = svg2Base64(svg, {height: fontSize, width: fontSize})
 			const hoverBase64Result = svg2Base64(svg)

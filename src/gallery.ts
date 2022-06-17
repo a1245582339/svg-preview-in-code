@@ -2,7 +2,7 @@ import path from 'path';
 import * as vscode from 'vscode';
 import fs from 'fs/promises'
 import { getCwd, getGlobPaths } from './utils/config';
-import { svg2Base64, SVGReg } from './utils/svg';
+import { removeEscape, svg2Base64, SVGReg } from './utils/svg';
 
 
 export const showGallery = async (context: vscode.ExtensionContext) => {
@@ -31,7 +31,7 @@ export const showGallery = async (context: vscode.ExtensionContext) => {
             while (match = SVGReg.exec(fileStr)) {
                 const { index } = match
                 matches.push({
-                    ...svg2Base64(match[0], { height: 40, width: 40 }),
+                    ...svg2Base64(removeEscape(match[0]), { height: 40, width: 40 }),
                     index
                 })
             }

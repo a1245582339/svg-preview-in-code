@@ -26,3 +26,7 @@ export const svg2Base64 = (code: string, size?: {height: number, width: number})
         originalSize
     }
 }
+
+export const removeEscape = (str: string) => {
+    return str.replace(/\\t|\\s|\\n|\\/g, '')
+}
